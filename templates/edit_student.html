@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<script>
+    function checkFields() {
+        var msg;
+        if (document.getElementById('first_name').value === "") {
+            msg += 'First Name is empty!\n';
+        }
+        if (document.getElementById('last_name').value === "") {
+           msg += 'Last Name is empty!\n';
+        }
+        if (document.getElementById('gpa').value === "") {
+            msg += 'GPA is empty!\n';
+        }
+        if (document.getElementById('student_id').value === "") {
+            msg += 'Student ID is empty!\n';
+        }
+        if (document.getElementById('first_name').value === "") {
+            msg += 'First Name is empty!\n';
+        }
+        if (msg)
+            window.alert(msg);
+    }
+</script>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    {% if eresult %}
+    <form action="edit" method="POST">
+        <table>
+            <tr>
+                <td>
+                    <label for="first_name">First Name:</label>
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="first_name" name="first_name" style='width: 100%;' value='{{eresult["first_name"]}}' />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="last_name">Last Name:</label>
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="last_name" name="last_name" style='width: 100%;' value='{{eresult["last_name"]}}' />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="gpa">GPA:</label>
+                </td>
+                <td>
+                    <input class="form-control" type="text" id="gpa" name="gpa" style='width: 100%;' value='{{eresult["gpa"]}}' />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="student_id">Student ID:</label>
+                </td>
+                <td>
+                    {% if eresult["student_id"] %}
+                    <input class="form-control" type="text" id="student_id" name="student_id" style='width: 100%; background-color:antiquewhite' readonly value='{{eresult["student_id"]}}' />
+                    {% else %}
+                    <input class="form-control" type="text" id="student_id" name="student_id" style='width: 100%;' value='{{eresult["student_id"]}}' />
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+        <input type="hidden" name="version" value='{{eresult["version"]}}' />
+        <br>
+        <p><input class="btn-primary" type="submit" value="Update Data" onclick="checkFields()" /></p>
+    </form>
+    {% endif %}
+</body>
+</html>

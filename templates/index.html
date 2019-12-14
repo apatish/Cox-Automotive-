@@ -1,0 +1,63 @@
+﻿<script>
+    var student_ids = [];
+    function handleClick() {
+        var chk_box = document.getElementById("box");
+        if (chk_box.checked) {
+            student_ids.push(chk_box.value);
+        }
+        else {
+            for( var i = 0; i < student_ids.length; i++){ 
+                if ( student_ids[i] === chk_box.value) {
+                    student_ids.splice(i, 1); 
+                    i--;
+                }
+            }
+            window.alert("Clicked, new value = " + chk_box.value);
+        }
+
+    }
+    function ConfirmDelete(elm){
+        confirm("Are you sure you want to delete this row?");
+    }
+</script>
+
+<form action="" method="post" name="studentform">
+    <table>
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>Student Last Name</th>
+                <th>Student First Name</th>
+                <th>GPA</th>
+                <th>Student ID</th>
+            </tr>
+        </thead>
+
+        {% for result in results %}
+        <tr>
+            <td>
+                <a href="{{ url_for('sql_dataedit', last_name=result["last_name"], first_name=result["first_name"], gpa=result["gpa"], student_id=result["student_id"], version=result["version"]|int + 1)}}" target="_blank">
+                    <img src="{{url_for('static', filename='edit.ico')}}" />
+                </a>
+                <a href="{{ url_for('sql_datadelete', student_id=result["student_id"]) }}" onclick="ConfirmDelete(this)">
+                    <img src="{{url_for('static', filename='Delete.ico')}}" />
+                </a>
+                <input type="hidden" name="version" value='{{result["version"]}}' />
+            </td>
+            <td>{{result["last_name"]}}</td>
+            <td>{{result["first_name"]}}</td>
+            <td>{{result["gpa"]}}</td>
+            <td>{{result["student_id"]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <table>
+        <tr>
+            <td>
+                <a href="{{ url_for('sql_dataedit', last_name="", first_name="", gpa="", student_id="") }}" target="_blank">
+                    <img src="{{url_for('static', filename='add.ico')}}" />
+                </a>
+            </td>
+        </tr>
+    </table>
+</form>
